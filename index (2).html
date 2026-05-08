@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script type='text/javascript' >
+const lsijVersion = 1;
+
+
+
+class Flags {
+	constructor(url, terms) {
+		this.url = url;
+		this.matched = {};
+
+		this.terms = [];
+		terms.forEach((term) => {
+			let s = term.replace(/[\]{}?^$().*\\+|[]/g, '\\$&');
+			s = s.replace(/\\\*/g, '.*');
+			s = s.replace(/\\\?/g, '.');
+			let regex = new RegExp('\\b' + s + '\\b', 'gi');
+			this.terms.push({term: term, regex: regex});
+		});
+	}
+
+	report(flags) {
+        console.debug('[LS Filter] flag report');
+		if (!flags.length)
+            return;
+
+		const xhr = new XMLHttpRequest();
+		xhr.open('POST', document.location.origin + '/772ff609488b2c9bb6bb2871cac430715c14f39e1462bea30062462d694cfd9a/log_flag', true);
+		console.debug('[LS Filter] sending -> ', flags);
+		xhr.send(JSON.stringify({
+			url: this.url.href,
+			flags: flags,
+			at_epoch_ms: Date.now()
+		}));
+	}
+
+	matchTerms(input, flagAll) {
+		const matches = [];
+		this.terms.forEach((term) => {
+			const hits = input.match(term.regex);
+			if (!hits || !hits.length)
+				return;
+
+			let added = false;
+			if (typeof(this.matched[term.term]) === 'undefined')
+				added = true
+
+			let count = hits.length;
+			if (!added)
+				count -= this.matched[term.term];
+
+			this.matched[term.term] = hits.length;
+
+			if (added || flagAll)
+				matches.push([term.term, count]);
+		});
+		return matches;
+	}
+
+	scanIntentValue(value) {
+		const matches = this.matchTerms(value, true);
+		const changes = [];
+		matches.forEach((match) => {
+			match[2] = true; // mark as user entered
+			changes.push(match);
+		});
+
+		if (changes.length)
+			this.report(changes);
+	}
+
+	scanIntentValues(values) {
+		values.forEach((value) => {
+			this.scanIntentValue(value);
+		});
+	}
+
+	scanIntentEvent(event) {
+		switch (event.target.tagName.toLowerCase()) {
+		case 'input':
+			let type = event.target.type || 'text';
+			type = type.toLowerCase();
+
+			// Dont scan password fields
+			if (type === 'password')
+				return;
+			this.scanIntentValue(event.target.value);
+			break;
+		case 'textarea':
+			this.scanIntentValue(event.target.value);
+			break;
+		}
+	}
+
+	scanIntent(event) {
+		if (typeof(gatherIntent) === 'function') {
+			const intent = gatherIntent();
+			if (intent.length)
+				this.scanIntentValues(intent);
+		}
+	}
+
+	onChange(event) {
+		this.scanIntentEvent(event);
+	}
+
+	onKeyup(event) {
+		this.scanIntentEvent(event);
+	}
+
+	bindDOM() {
+		document.addEventListener('change', this.onChange.bind(this));
+		document.addEventListener('keyup', this.onKeyup.bind(this));
+		setInterval(() => {
+			this.scanIntent();
+		}, 1000);
+	}
+}
+
+const initFlagScanning = function(terms) {
+	if (!terms.length)
+		return;
+
+	console.debug('[LS Filter] init flag scanning');
+	const a = document.createElement('A');
+	a.href = window.location.href;
+	const flags = new Flags(a, terms);
+	
+	console.debug('[LS Filter] flagging intent');
+	if (typeof(initGatherIntent) === 'function')
+		initGatherIntent();
+
+	flags.bindDOM();
+	
+};
+
+initFlagScanning(["suicide","glype","proxy","Anarchist cookbook","Become a terrorist","Binge and purge","binging and purging","Blow up school","Bitch","Bong rips","Bulimia ","Buy alcohol underage","Buy gun","Buy knives","commit suicide","Cock","Cunt","Cutting yourself","Dumb bitch","Dumbass","Dyke","Faggot","Gun in school","Fuck you","Heroin","Homemade bomb","How to hang yourself","How to become anorexic","How to get revenge","How to join a gang","How to join ISIS","How to kill","How to make myself throw up","How to sext","How to sneak things past security","I hate myself","I want to cut myself","kill you","Kill myself","I want to die","Make a bomb","Make a bong","Murder suicide","My life is shit","My life is worthless","Naked girls","Naked pics","nigga","Nigger","Pipe bomb","Porn","Pussy","Rape","Retard","Sex online","Slut","Smoke weed","Sneak gun in school","Suicide","Suicide bomb","Suicide by cop","Suicide vest","Where to buy drugs","White pride","Whore"]);
+
+
+
+function checkCurrentSite(yt, url) {
+  const xhr = new XMLHttpRequest();
+  const body = JSON.stringify({
+    url: url || window.location.href,
+    youtube: yt
+  });
+  console.log('[LS Filter] reporting ->', body);
+  const checkUrl = document.location.origin + '/772ff609488b2c9bb6bb2871cac430715c14f39e1462bea30062462d694cfd9a/log';
+  xhr.open('POST', checkUrl, true);
+  xhr.send(body);
+  xhr.onreadystatechange = function () {
+    if (this.status === 200 && xhr.responseText) {
+      const score = JSON.parse(xhr.responseText);
+      console.log('[LS Filter] score ->', score.allow);
+      if (score.redirect) {
+        window.location.href = score.redirect;
+        hardBlock();
+      }
+    }
+  };
+}
+
+let hardBlockPolicy;
+function getHardBlockPolicy() {
+  if (typeof(trustedTypes) !== 'undefined' && !hardBlockPolicy) {
+    hardBlockPolicy = trustedTypes.createPolicy('hardBlock', {
+      createHTML: (string) => string
+    });
+  }
+  return hardBlockPolicy;
+}
+
+function hardBlock() {
+  stopVideo();
+  const stopInt = setInterval(stopVideo, 500);
+  setTimeout(() => {
+    const policy = getHardBlockPolicy();
+    if (policy) {
+      document.body.innerHTML = policy.createHTML('<img src="/772ff609488b2c9bb6bb2871cac430715c14f39e1462bea30062462d694cfd9a/blocked-image-search.png" style="width: 100%; height: 100%">');
+    } else {
+      document.body.innerHTML = '<img src="/772ff609488b2c9bb6bb2871cac430715c14f39e1462bea30062462d694cfd9a/blocked-image-search.png" style="width: 100%; height: 100%">';
+    }
+    clearInterval(stopInt);
+  }, 3000)
+}
+
+function stopVideo() {
+  const ea = document.getElementsByTagName('video');
+  for (i in ea) {
+    if (typeof(ea[i].pause) !== 'function') {
+      continue;
+    }
+    if (!ea[i].paused) {
+        console.debug('[LS Filter] pause video');
+        ea[i].pause();
+    }
+  }
+}
+
+function googleVideo() {
+  if (window.location.href.match(/google\.com\/search\?/)) {
+    const vidMatcher = /google\.com\/search\?.*vid:([^#\&\?]{11})/;
+    let prevVideo;
+    new MutationObserver(function() {
+      console.log('[LS Filter] MutationObserver');
+      let video;
+      let m = window.location.href.match(vidMatcher)
+      if (m) {
+        video = m[1];
+      }
+      if (video === prevVideo) { return; }           
+      console.log('[LS Filter] scoring video ->', video);
+      prevVideo = video;
+      checkCurrentSite(true, 'https://www.youtube.com/watch?v=' + video);
+    }).observe(document, {subtree: true, childList: true});
+  }
+}
+
+function onLoad() {
+  console.log('[LS Filter] loaded');
+  if (window.top === window.self) {
+    console.log('[LS Filter] top window: ' + window.location.href);
+    googleVideo();
+  }
+}
+
+onLoad();
+
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Henglong Dang Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --secondary-color: #3b82f6;
+            --bg-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-main: #334155;
+            --text-light: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Layout */
+        section {
+            padding: 6rem 2rem 4rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 2.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 3px;
+            background: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        /* Hero Section */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 8rem;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-subtitle {
+            color: var(--secondary-color);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-desc {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--text-main);
+            font-size: 1.5rem;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+        .social-links a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Cards and Lists */
+        .card {
+            background: var(--surface-color);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .card-subtitle {
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .bullet-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+        }
+
+        .bullet-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .details-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: gap 0.2s, color 0.2s;
+        }
+
+        .details-link:hover {
+            color: var(--primary-color);
+            gap: 0.75rem;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--secondary-color);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none; /* simple mobile handling */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">HD.</a>
+            <div class="nav-links">
+                <a href="#experience">Experience</a>
+                <a href="#research">Research & Publications</a>
+                <a href="#activities">Leadership</a>
+                <a href="#background">Background</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home">
+        <div class="hero-content">
+            <span class="hero-subtitle">Data Science • AI Ethics • Human-Centered Design</span>
+            <h1 class="hero-title">Henglong Dang</h1>
+            <p class="hero-desc">
+                Researcher, author, and strategist exploring the intersection of interdisciplinary innovation, human-computer interaction, and purpose-driven technology.
+            </p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/henglongdang/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:danghenglong@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://scholar.google.com/citations?user=D06-T50AAAAJ&hl=en" target="_blank" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2 class="section-title">Professional Experience</h2>
+        
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">Strategic Operations Lead</h3>
+                    <div class="card-subtitle">DFDraw Lab</div>
+                </div>
+                <div class="card-date">2024 — Present</div>
+            </div>
+            <p style="margin-bottom: 1rem; color: var(--text-light); font-style: italic;">
+                Multinational design & strategy studio that blends creativity & function to shape innovative experiences.
+            </p>
+            <ul class="bullet-list">
+                <li>Lead planning and cross-functional coordination to improve operational efficiency and align execution with organizational priorities. Facilitated cross-team collaboration on 3 projects.</li>
+                <li>Implemented structural reforms that improved workflow scalability and supported team growth.</li>
+            </ul>
+            <a href="experience-dfdraw.html" class="details-link">Read full case study <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">Founder and President</h3>
+                    <div class="card-subtitle">Synaperge</div>
+                </div>
+                <div class="card-date">2023 — Present</div>
+            </div>
+            <p style="margin-bottom: 1rem; color: var(--text-light); font-style: italic;">
+                Providing a platform for interdisciplinary innovation through discussion, research, and real-world experimentation.
+            </p>
+            <ul class="bullet-list">
+                <li>Scaled the organization to 56 members internationally, building a platform for interdisciplinary collaboration and project-based innovation.</li>
+                <li>Incubated 3 community innovation projects on AI bias in ed-tech, fast-food branding psychology, and financial app UX accessibility.</li>
+            </ul>
+            <a href="experience-synaperge.html" class="details-link">Explore Synaperge initiatives <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <section id="research">
+        <h2 class="section-title">Research & Publications</h2>
+        
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">Human-Centered, Sustainable, and Socially-Responsible Innovation</h3>
+                    <div class="card-subtitle">Author | ISBN: 979-8248682874</div>
+                </div>
+                <div class="card-date">2025 — 2026</div>
+            </div>
+            <ul class="bullet-list">
+                <li>Authored a 257-page book introducing the concept of the "Great Outsourcing"—the moment humanity outsources judgment to generative AI.</li>
+            </ul>
+            <a href="research-outsourcing.html" class="details-link">Read book synopsis & excerpts <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">Echoes in the Machine: Relevance Gravity of Generative AI</h3>
+                    <div class="card-subtitle">Author | ISBN: 979-8296185310</div>
+                </div>
+                <div class="card-date">2025</div>
+            </div>
+            <ul class="bullet-list">
+                <li>Developed a conceptual framework on epistemic collapse in technology and the self.</li>
+                <li>Proposed 5 original theories spanning AI, ethics, and cognition. Self-published a 175-page book.</li>
+            </ul>
+            <a href="research-echoes.html" class="details-link">View theoretical frameworks <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">Revolutionizing Household Finance: A User-Centered Platform</h3>
+                    <div class="card-subtitle">First Author | HCII 2025 Conference</div>
+                </div>
+                <div class="card-date">2024 — 2025</div>
+            </div>
+            <ul class="bullet-list">
+                <li>Led Human-Computer Interaction & Fintech study on financial apps. Analyzed functional fragmentation across 8 existing applications.</li>
+                <li>Conducted 24 usability interviews, synthesized findings, and developed an app prototype.</li>
+            </ul>
+            <a href="research-finance.html" class="details-link">View research methodology & data <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <section id="activities">
+        <h2 class="section-title">Leadership & Activities</h2>
+        
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">Representative</h3>
+                    <div class="card-subtitle">Bellevue School District Strategic Planning Coalition</div>
+                </div>
+                <div class="card-date">2024 — 2025</div>
+            </div>
+            <ul class="bullet-list">
+                <li>Advised district leaders on policies to expand student voices and qualitative measures. Contributed to policy discussions on human-centered systems.</li>
+                <li>Helped shape long-term strategies balancing student needs with a $20M district budget deficit.</li>
+            </ul>
+            <a href="leadership-bellevue.html" class="details-link">View policy contributions <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-title">Member</h3>
+                    <div class="card-subtitle">Association for the Advancement of Artificial Intelligence (AAAI)</div>
+                </div>
+                <div class="card-date">2025 — Present</div>
+            </div>
+            <ul class="bullet-list">
+                <li>Participated in AAAI seminars and actively engaged in research on AI ethics, model alignment, and HCI-AI intersections.</li>
+            </ul>
+            <a href="leadership-aaai.html" class="details-link">View AAAI involvements <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <section id="background">
+        <h2 class="section-title">Academic Background</h2>
+        <div class="grid-2">
+            <div class="card" style="margin-bottom: 0;">
+                <h3 class="card-title">Academic Degrees</h3>
+                <div class="card-subtitle" style="margin-top: 0.5rem;">University of California, Los Angeles (UCLA)</div>
+                <p style="margin-bottom: 1rem;"><span class="badge">B.S. in Statistics and Data Science</span></p>
+                <p style="font-size: 0.95rem; color: var(--text-light);">Coursework encompassing Statistical Modeling, Software Development, Calculus, and Marketing.</p>
+            </div>
+            
+            <div class="card" style="margin-bottom: 0;">
+                <h3 class="card-title">Professional Certifications</h3>
+                <div style="margin-top: 1rem;">
+                    <div style="margin-bottom: 1rem;">
+                        <div style="font-weight: 600; color: var(--text-main);">Stanford University</div>
+                        <div style="color: var(--text-light); font-size: 0.9rem;">Machine Learning Specialization Certificate</div>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-main);">IBM</div>
+                        <div style="color: var(--text-light); font-size: 0.9rem;">Artificial Intelligence Fundamentals Certificate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Henglong Dang. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
