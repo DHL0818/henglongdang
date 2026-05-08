@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Henglong Dang</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #020617;
+      --panel: #0f172a;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --border: #1e293b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
+      background: rgba(2,6,23,0.7);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    nav .name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 0.85rem;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 0 20px;
+    }
+
+    .hero {
+      padding: 120px 0 80px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .hero p {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 700px;
+    }
+
+    .hero .cta {
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-right: 10px;
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      color: #020617;
+      border: none;
+    }
+
+    section {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--panel);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      transition: transform 0.2s ease, border 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 1rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .list {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .list p { margin: 6px 0; }
+
+    footer {
+      padding: 40px 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media(max-width: 800px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="name">Henglong Dang</div>
+  <div>
+    <a href="#work">Work</a>
+    <a href="#research">Research</a>
+    <a href="#ideas">Ideas</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <section class="hero">
+    <h1>Constructing frameworks for how humans think, decide, and build in the age of AI.</h1>
+    <p>
+      Focused on the intersection of cognition, technology, and systems design. Work spans research, organizational strategy, and original theory development, with an emphasis on how emerging tools reshape judgment and human agency.
+    </p>
+    <div class="cta">
+      <a class="btn primary" href="mailto:danghenglong@gmail.com">Contact</a>
+      <a class="btn" href="https://www.linkedin.com/in/henglongdang/" target="_blank">LinkedIn</a>
+    </div>
+  </section>
+
+  <section id="work">
+    <h2>Work</h2>
+    <div class="grid">
+
+      <div class="card">
+        <h3>DFDraw Lab — Strategic Operations</h3>
+        <p>
+          Directed cross-functional execution across multiple initiatives. Introduced structural changes that improved coordination, scalability, and internal alignment.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Synaperge — Founder</h3>
+        <p>
+          Built an international platform for interdisciplinary collaboration. Led seminars and developed initiatives translating abstract ideas into applied systems and research-driven projects.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="research">
+    <h2>Research & Publications</h2>
+    <div class="grid">
+
+      <div class="card">
+        <h3>Echoes in the Machine</h3>
+        <p>
+          Introduces original frameworks on epistemic collapse, examining how generative systems reshape perception, meaning, and identity.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Human-Centered Innovation</h3>
+        <p>
+          Proposes the concept of the Great Outsourcing and outlines frameworks for evaluating technological decision-making through human-centered principles.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Financial Systems HCI Study</h3>
+        <p>
+          First-author research analyzing fragmentation in financial tools. Developed a unified prototype through user research and usability analysis.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="ideas">
+    <h2>Selected Ideas</h2>
+    <div class="card">
+      <div class="list">
+        <p>Relevance Gravity — how information ecosystems collapse toward algorithmic salience</p>
+        <p>Mythic Academicism — the illusion of depth in knowledge systems</p>
+        <p>Antididactic Fragmentation — learning through discontinuity rather than structure</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="card">
+      <p>Email: danghenglong@gmail.com</p>
+      <p>LinkedIn: linkedin.com/in/henglongdang</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Henglong Dang</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
