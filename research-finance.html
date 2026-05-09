@@ -129,7 +129,11 @@
 
 
         /* === Accessibility Contrast Overrides === */
-        .pill, .badge, .card-subtitle, .card-date {
+        .pill {
+            color: #1e293b !important;
+        }
+
+        .badge, .card-subtitle, .card-date {
             color: var(--primary-color) !important;
         }
 
@@ -140,7 +144,12 @@
         }
 
         .cta a, .actions a, .hero-cta {
+            background: #0369a1;
             color: #f8fafc !important;
+        }
+
+        .cta a:hover, .actions a:hover, .hero-cta:hover {
+            background: #075985;
         }
 
     </style>
