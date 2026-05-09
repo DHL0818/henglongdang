@@ -467,19 +467,21 @@ onLoad();
             gap: 0.5rem;
             margin-top: 1rem;
             padding: 0.75rem 1.25rem;
-            background: var(--secondary-color);
-            color: #fff;
+            background: transparent;
+            color: var(--secondary-color);
+            border: 1px solid var(--secondary-color);
             border-radius: 999px;
             text-decoration: none;
             font-weight: 600;
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.18);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
         }
 
         .hero-cta:hover {
-            background: #2563eb;
+            background: var(--secondary-color);
+            color: var(--bg-color);
             transform: translateY(-1px);
-            box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+            box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28);
         }
 
         /* Grid Layouts */
@@ -528,11 +530,11 @@ onLoad();
         /* === Technical Dark Retheme Overrides === */
         :root {
             --primary-color: #f5f8ff;
-            --secondary-color: #58a6c7;
+            --secondary-color: #7dd3fc;
             --bg-color: #0d0f14;
             --surface-color: #131a22;
             --text-main: #e8edf5;
-            --text-light: #97a3b6;
+            --text-light: #cbd5e1;
             --grid-color: rgba(88, 166, 199, 0.06);
         }
 
@@ -590,24 +592,23 @@ onLoad();
         }
 
         .card-subtitle, .hero-subtitle, .details-link, a { color: var(--secondary-color); }
-        .hero-desc, .card-date, p, li { color: var(--text-light); }
+        .hero-desc, .card-date { color: var(--text-light); }
+        p, li { color: var(--text-main); }
 
         .badge, .card-date, .card-subtitle {
             display: inline-block;
             padding: 0.2rem 0.65rem;
             border-radius: 999px;
-            border: 1px solid rgba(88, 166, 199, 0.25);
-            background: rgba(88, 166, 199, 0.08);
+            border: 1px solid rgba(125, 211, 252, 0.45);
+            background: rgba(125, 211, 252, 0.18);
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
             font-size: 0.82rem;
             letter-spacing: 0.02em;
         }
 
         .hero-cta {
-            background: #356f8a;
-            box-shadow: 0 10px 24px rgba(36, 87, 112, 0.35);
+            box-shadow: 0 10px 24px rgba(36, 87, 112, 0.2);
         }
-        .hero-cta:hover { background: #3f7f9f; }
 
         #home { position: relative; overflow: hidden; }
         #home::before {
@@ -616,6 +617,28 @@ onLoad();
             inset: 0;
             pointer-events: none;
             background: radial-gradient(circle at 15% 25%, rgba(88, 166, 199, 0.14), transparent 38%);
+        }
+
+
+        /* === Accessibility Contrast Overrides === */
+        .pill, .badge, .card-subtitle, .card-date {
+            color: var(--primary-color) !important;
+        }
+
+        .cta a, .actions a, .hero-cta, button, .btn, .button {
+            background: transparent;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color) !important;
+            transition: background-color 180ms ease-in-out, color 180ms ease-in-out, border-color 180ms ease-in-out;
+        }
+
+        .cta a:hover, .actions a:hover, .hero-cta:hover,
+        .cta a:focus-visible, .actions a:focus-visible, .hero-cta:focus-visible,
+        button:hover, button:focus-visible,
+        .btn:hover, .btn:focus-visible,
+        .button:hover, .button:focus-visible {
+            background: var(--secondary-color);
+            color: var(--bg-color) !important;
         }
 
     </style>
