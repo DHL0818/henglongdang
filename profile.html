@@ -25,6 +25,101 @@
         .links { margin-top: 0.6rem; display: flex; gap: 0.8rem; flex-wrap: wrap; }
         .links a { color: var(--secondary-color); text-decoration: none; font-weight: 600; }
         .bio { white-space: pre-line; color: var(--text-main); }
+    
+
+        /* === Technical Dark Retheme Overrides === */
+        :root {
+            --primary-color: #f5f8ff;
+            --secondary-color: #58a6c7;
+            --bg-color: #0d0f14;
+            --surface-color: #131a22;
+            --text-main: #e8edf5;
+            --text-light: #97a3b6;
+            --grid-color: rgba(88, 166, 199, 0.06);
+        }
+
+        * { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+        body {
+            background: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+            background-attachment: fixed;
+        }
+
+        nav {
+            background: rgba(13, 15, 20, 0.85) !important;
+            border-bottom: 1px solid rgba(88, 166, 199, 0.2);
+            box-shadow: 0 1px 0 rgba(88, 166, 199, 0.08);
+        }
+
+        .nav-logo, .hero-title, .section-title, .card-title { font-family: "Space Grotesk", Inter, system-ui, sans-serif; letter-spacing: 0.01em; }
+        .nav-links a {
+            position: relative;
+            color: var(--text-main);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 1px;
+            background: var(--secondary-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.28s ease;
+        }
+        .nav-links a:hover::after,
+        .nav-links a:focus-visible::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .section-title {
+            border-left: 1px solid var(--secondary-color);
+            padding-left: 0.75rem;
+        }
+        .section-title::after { opacity: 0.65; }
+
+        .card {
+            background: rgba(19, 26, 34, 0.9);
+            border: 1px solid rgba(88, 166, 199, 0.16);
+            box-shadow: 0 14px 24px rgba(0, 0, 0, 0.28);
+        }
+
+        .card-subtitle, .hero-subtitle, .details-link, a { color: var(--secondary-color); }
+        .hero-desc, .card-date, p, li { color: var(--text-light); }
+
+        .badge, .card-date, .card-subtitle {
+            display: inline-block;
+            padding: 0.2rem 0.65rem;
+            border-radius: 999px;
+            border: 1px solid rgba(88, 166, 199, 0.25);
+            background: rgba(88, 166, 199, 0.08);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 0.82rem;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-cta {
+            background: #356f8a;
+            box-shadow: 0 10px 24px rgba(36, 87, 112, 0.35);
+        }
+        .hero-cta:hover { background: #3f7f9f; }
+
+        #home { position: relative; overflow: hidden; }
+        #home::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 15% 25%, rgba(88, 166, 199, 0.14), transparent 38%);
+        }
+
     </style>
 </head>
 <body>
