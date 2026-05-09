@@ -625,20 +625,14 @@ onLoad();
             color: var(--primary-color) !important;
         }
 
-        .cta a, .actions a, .hero-cta, button, .btn, .button {
-            background: transparent;
-            border: 1px solid var(--secondary-color);
-            color: var(--secondary-color) !important;
-            transition: background-color 180ms ease-in-out, color 180ms ease-in-out, border-color 180ms ease-in-out;
+        .cta a.secondary, .actions a.secondary {
+            background: #334155;
+            color: #f8fafc;
+            border: 1px solid #64748b;
         }
 
-        .cta a:hover, .actions a:hover, .hero-cta:hover,
-        .cta a:focus-visible, .actions a:focus-visible, .hero-cta:focus-visible,
-        button:hover, button:focus-visible,
-        .btn:hover, .btn:focus-visible,
-        .button:hover, .button:focus-visible {
-            background: var(--secondary-color);
-            color: var(--bg-color) !important;
+        .cta a, .actions a, .hero-cta {
+            color: #f8fafc !important;
         }
 
     </style>
