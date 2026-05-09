@@ -528,11 +528,11 @@ onLoad();
         /* === Technical Dark Retheme Overrides === */
         :root {
             --primary-color: #f5f8ff;
-            --secondary-color: #58a6c7;
+            --secondary-color: #7dd3fc;
             --bg-color: #0d0f14;
             --surface-color: #131a22;
             --text-main: #e8edf5;
-            --text-light: #97a3b6;
+            --text-light: #cbd5e1;
             --grid-color: rgba(88, 166, 199, 0.06);
         }
 
@@ -590,14 +590,15 @@ onLoad();
         }
 
         .card-subtitle, .hero-subtitle, .details-link, a { color: var(--secondary-color); }
-        .hero-desc, .card-date, p, li { color: var(--text-light); }
+        .hero-desc, .card-date { color: var(--text-light); }
+        p, li { color: var(--text-main); }
 
         .badge, .card-date, .card-subtitle {
             display: inline-block;
             padding: 0.2rem 0.65rem;
             border-radius: 999px;
-            border: 1px solid rgba(88, 166, 199, 0.25);
-            background: rgba(88, 166, 199, 0.08);
+            border: 1px solid rgba(125, 211, 252, 0.45);
+            background: rgba(125, 211, 252, 0.18);
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
             font-size: 0.82rem;
             letter-spacing: 0.02em;
@@ -616,6 +617,22 @@ onLoad();
             inset: 0;
             pointer-events: none;
             background: radial-gradient(circle at 15% 25%, rgba(88, 166, 199, 0.14), transparent 38%);
+        }
+
+
+        /* === Accessibility Contrast Overrides === */
+        .pill, .badge, .card-subtitle, .card-date {
+            color: var(--primary-color) !important;
+        }
+
+        .cta a.secondary, .actions a.secondary {
+            background: #334155;
+            color: #f8fafc;
+            border: 1px solid #64748b;
+        }
+
+        .cta a, .actions a, .hero-cta {
+            color: #f8fafc !important;
         }
 
     </style>
