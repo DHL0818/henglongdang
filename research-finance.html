@@ -41,7 +41,7 @@
             --surface-color: #131a22;
             --text-main: #e8edf5;
             --text-light: #97a3b6;
-            --grid-color: rgba(88, 166, 199, 0.04);
+            --grid-color: rgba(88, 166, 199, 0.06);
         }
 
         * { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
@@ -107,7 +107,7 @@
             border: 1px solid rgba(88, 166, 199, 0.25);
             background: rgba(88, 166, 199, 0.08);
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-            font-size: 0.875rem;
+            font-size: 0.82rem;
             letter-spacing: 0.02em;
         }
 
@@ -124,45 +124,6 @@
             inset: 0;
             pointer-events: none;
             background: radial-gradient(circle at 15% 25%, rgba(88, 166, 199, 0.14), transparent 38%);
-        }
-
-
-        /* a11y-interaction-tuning */
-        p, li, .bio {
-            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif !important;
-            font-size: max(0.875rem, 14px);
-        }
-
-        a, button, .actions a, .cta a, .details-link, .hero-cta {
-            transition: color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, outline-color 0.2s ease;
-        }
-
-        a:hover, .details-link:hover { color: #79c2df; }
-
-        a:focus-visible,
-        button:focus-visible,
-        .actions a:focus-visible,
-        .cta a:focus-visible,
-        .hero-cta:focus-visible,
-        .card:focus-within {
-            outline: 2px solid rgba(121, 194, 223, 0.9);
-            outline-offset: 3px;
-            border-radius: 8px;
-        }
-
-        .card:hover {
-            border-color: rgba(121, 194, 223, 0.35);
-        }
-
-        .bullet-list li::before {
-            opacity: 0.72;
-        }
-
-        @media (max-width: 768px) {
-            .nav-container, .container {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
         }
 
     </style>
