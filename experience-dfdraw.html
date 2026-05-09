@@ -47,14 +47,15 @@
       margin-top: 0.75rem;
       text-decoration: none;
       font-weight: 600;
-      color: white;
-      background: var(--secondary-color);
+      color: var(--secondary-color);
+      background: transparent;
+      border: 1px solid var(--secondary-color);
       padding: 0.65rem 1rem;
       border-radius: 10px;
     }
     .actions a.secondary {
-      background: #e2e8f0;
-      color: var(--primary-color);
+      background: transparent;
+      color: var(--secondary-color);
     }
   
 
@@ -138,10 +139,8 @@
         }
 
         .hero-cta {
-            background: #356f8a;
-            box-shadow: 0 10px 24px rgba(36, 87, 112, 0.35);
+            box-shadow: 0 10px 24px rgba(36, 87, 112, 0.2);
         }
-        .hero-cta:hover { background: #3f7f9f; }
 
         #home { position: relative; overflow: hidden; }
         #home::before {
