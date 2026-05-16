@@ -51,15 +51,6 @@
       border: 1px solid rgba(125, 211, 252, 0.45);
       margin-bottom: 0.8rem;
     }
-    .logo {
-      width: 72px;
-      height: 72px;
-      border-radius: 12px;
-      object-fit: cover;
-      border: 1px solid rgba(125, 211, 252, 0.35);
-      margin-bottom: 1rem;
-      background: #0f172a;
-    }
     .actions a {
       display: inline-block;
       margin-right: 0.75rem;
@@ -72,7 +63,9 @@
       padding: 0.65rem 1rem;
       border-radius: 10px;
     }
-    .actions a.secondary { background: #334155; border-color: #64748b; }
+    .actions a.secondary { background: #334155; color: #f8fafc; border: 1px solid #64748b; }
+    .actions a:hover { background: #075985; border-color: #075985; }
+    .actions a.secondary:hover { background: #475569; border-color: #475569; }
   </style>
 </head>
 <body>
@@ -83,7 +76,6 @@
 
     <section class="card">
       <span class="pill">Organization Profile</span>
-      <img class="logo" src="https://www.google.com/s2/favicons?sz=128&domain_url=synaperge.wixsite.com" alt="Synaperge logo" />
       <h1>Synaperge</h1>
       <p class="subtitle">Interdisciplinary collaboration, critical discourse, and innovation-driven action.</p>
       <p>
