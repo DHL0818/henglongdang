@@ -57,6 +57,35 @@
       background: transparent;
       color: var(--secondary-color);
     }
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .project-card {
+      display: block;
+      text-decoration: none;
+      border: 1px solid rgba(125, 211, 252, 0.25);
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(2, 6, 23, 0.35);
+      border-color: rgba(125, 211, 252, 0.6);
+    }
+    .project-card img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      display: block;
+    }
+    .project-content { padding: 0.85rem 0.95rem 1rem; }
+    .project-content h3 { font-size: 1rem; margin-bottom: 0.35rem; color: var(--primary-color); }
+    .project-content p { font-size: 0.92rem; color: var(--text-light); }
   
 
         /* === Technical Dark Retheme Overrides === */
@@ -217,6 +246,39 @@
         <li>Focus on scaling organizational capacity, improving interdepartmental efficiency, and ensuring consistent mission execution.</li>
         <li>Implemented structural reforms that improved workflow scalability and supported team growth.</li>
       </ul>
+    </section>
+
+    <section class="card">
+      <h2>Representative DFDraw Lab Projects</h2>
+      <p class="subtitle">A focused selection showcasing UX strategy, branded experiences, and product storytelling.</p>
+      <p>
+        I actively contributed to translating strategy into execution across these project tracks—aligning goals,
+        facilitating cross-functional coordination, and reinforcing operational clarity to ensure each initiative
+        delivered meaningful outcomes.
+      </p>
+      <div class="project-grid">
+        <a class="project-card" href="https://www.dfdrawlab.com/ux" target="_blank" rel="noopener noreferrer">
+          <img src="https://image.thum.io/get/width/1200/noanimate/https://www.dfdrawlab.com/ux" alt="DFDraw Lab UX portfolio overview">
+          <div class="project-content">
+            <h3>UX Systems & Service Flows</h3>
+            <p>User-centered interface and interaction programs from DFDraw Lab’s UX practice.</p>
+          </div>
+        </a>
+        <a class="project-card" href="https://www.dfdrawlab.com/creations" target="_blank" rel="noopener noreferrer">
+          <img src="https://image.thum.io/get/width/1200/noanimate/https://www.dfdrawlab.com/creations" alt="DFDraw Lab Creations showcase">
+          <div class="project-content">
+            <h3>Creative Direction & Visual Narratives</h3>
+            <p>Selected branding, campaigns, and visual communication work from DFDraw Lab Creations.</p>
+          </div>
+        </a>
+        <a class="project-card" href="https://www.dfdrawlab.com/" target="_blank" rel="noopener noreferrer">
+          <img src="https://image.thum.io/get/width/1200/noanimate/https://www.dfdrawlab.com/" alt="DFDraw Lab homepage and project ecosystem">
+          <div class="project-content">
+            <h3>Integrated Studio Ecosystem</h3>
+            <p>A cross-domain view connecting UX, creations, and strategic delivery across the studio.</p>
+          </div>
+        </a>
+      </div>
     </section>
   </main>
 </body>
