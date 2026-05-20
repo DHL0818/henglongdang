@@ -1,0 +1,334 @@
+---
+
+## Detailed Architecture of `henglongdang/home` Repository
+
+### **Repository Overview**
+- **Type:** Static HTML Portfolio Website
+- **Language:** 100% HTML (with embedded CSS and JavaScript)
+- **Purpose:** Professional portfolio showcasing AI ethics, UX strategy, design leadership, and research publications
+- **Deployment:** GitHub Pages (`henglongdang.github.io/home/`)
+- **Repository Age:** 11 days old (as of 2026-05-20)
+- **Repository Size:** 352 KB
+
+---
+
+### **Directory Structure**
+
+```
+henglongdang/home/
+├── index.html                    # Main landing/homepage
+├── profile.html                  # Full profile and biography page
+├── README.md                     # Project documentation
+├── IMPROVEMENTS.md               # UX/SEO/Mobile improvements report
+├── ORIGINAL index.html           # Backup of original index
+├── robots.txt                    # SEO robots crawling configuration
+├── sitemap.xml                   # XML sitemap for search engines
+├── 111                          # Mystery file (6KB, purpose unclear)
+├── Profile Picture.jpg          # Author profile photograph (52KB)
+├── google284b90888274c00d.html  # Google verification file
+├── public/                      # Public assets directory (empty)
+│
+├── EXPERIENCE PAGES:
+├── experience-dfdraw.html       # DFDraw Lab case study
+├── synaperge.html               # Synaperge organization profile
+├── leadership-bellevue.html     # Bellevue School District involvement
+│
+├── RESEARCH PAGES:
+├── research-finance.html        # HCII 2025 fintech research paper
+├── research-outsourcing.html    # "Human-Centered Innovation" book synopsis
+├── research-echoes.html         # "Echoes in the Machine" book synopsis
+├── aaai.html                    # AAAI membership & involvement
+│
+└── LOGOS/ASSETS:
+    ├── dfdraw-logo.svg         # DFDraw Lab branded logo
+    └── synaperge-logo.svg      # Synaperge branded logo
+```
+
+---
+
+### **Page Architecture & Content Map**
+
+#### **1. Landing Page (`index.html`) - 34.3 KB**
+**Role:** Primary entry point with full portfolio navigation
+**Sections:**
+- **Navigation Bar:** Fixed top navigation with logo and section links (Experience, Research & Publications, Leadership, Background)
+- **Hero Section:** Name, tagline ("Data Science • AI Ethics • Human-Centered Design"), biography snippet, CTA button to profile, social links
+- **Professional Experience:** 
+  - DFDraw Lab (Strategic Operations Lead, Apr 2025–Present)
+  - Synaperge (Founder and President, 2023–Present)
+- **Research & Publications:**
+  - Fintech research paper (HCII 2025 Conference)
+  - "Human-Centered, Sustainable, and Socially-Responsible Innovation" book
+  - "Echoes in the Machine: Relevance Gravity of Generative AI" book
+- **Leadership & Activities:**
+  - Bellevue School District Strategic Planning Coalition Representative
+  - AAAI Member
+- **Academic Background:**
+  - UCLA B.S. in Statistics and Data Science
+  - Stanford Machine Learning Specialization
+  - IBM AI Fundamentals Certificate
+- **Footer:** Copyright notice & back-to-top button
+
+**Features:**
+- Embedded filtering/intent-tracking JavaScript (lines 3–228, appears to be from a content moderation/safety filter)
+- Dark mode theme with grid background pattern
+- Smooth scrolling, card hover effects
+- Responsive grid layouts
+- SEO metadata, schema.org JSON-LD structured data
+- Accessibility: skip-to-content link, ARIA roles, enhanced keyboard navigation
+
+**File Size:** 34,347 bytes
+
+---
+
+#### **2. Profile Page (`profile.html`) - 81.2 KB**
+**Role:** Deep-dive biographical and professional overview
+**Sections:**
+- **Back Navigation:** Return to homepage
+- **Profile Header:**
+  - Profile photograph (base64-encoded JPEG)
+  - Full name "Henglong Dang"
+  - Social links: LinkedIn, Google Scholar, ORCID, Medium, F6S, Crunchbase
+- **Bio Section:** Multi-paragraph professional narrative highlighting:
+  - System-minded leadership in human-centered innovation
+  - UX strategy, design leadership, socio-technical systems expertise
+  - AI ethics, model alignment, HCI-AI research
+  - Authorship of two books on AI and innovation
+  - Synaperge co-founder
+  - Multilingual proficiency (English, Mandarin Chinese, conversational Spanish)
+
+**Features:**
+- Similar dark theme styling as index.html
+- Larger profile photo display (260px × 260px)
+- Biographical text in pre-line formatting
+- External profile links styled consistently
+
+**File Size:** 81,177 bytes
+
+---
+
+#### **3. Experience Detail Pages**
+
+##### **`experience-dfdraw.html` - 12.4 KB**
+- **Header:** "DFDraw Lab" case study designation
+- **Overview:** Multinational design & strategy studio focus
+- **Role Details:** Strategic Operations Lead responsibilities
+- **Projects Grid:** Three project cards linking to external DFDraw Lab resources:
+  - UX Systems & Service Flows
+  - Creative Direction & Visual Narratives
+  - Integrated Studio Ecosystem
+- **External Link:** Visit DFDraw Lab website
+
+##### **`synaperge.html` - 7.0 KB**
+- **Header:** Organization profile designation
+- **Overview:** Interdisciplinary collaboration platform focused on AI ethics, innovation, social impact
+- **Role Details:** Founder and President (2023–Present)
+  - Community growth to 56 members
+  - Seminars on AI ethics, innovation strategy
+  - Youth AI Ethics course development
+  - Three innovation projects (ed-tech bias, branding psychology, fintech accessibility)
+- **External Links:** Website and LinkedIn
+
+---
+
+#### **4. Leadership & Activities Pages**
+
+##### **`leadership-bellevue.html` - 7.9 KB**
+- Policy contributions to Bellevue School District
+- Strategic planning on budget and student engagement
+- Human-centered systems focus
+
+##### **`aaai.html` - 5.2 KB**
+- Association for the Advancement of Artificial Intelligence membership
+- Research involvement in AI ethics, model alignment, HCI-AI
+
+---
+
+#### **5. Research & Publication Pages**
+
+##### **`research-finance.html` - 15.8 KB**
+- **Research Title:** "Revolutionizing Household Finance: A User-Centered Platform for Holistic Financial Management"
+- **Publication:** HCII 2025 Conference (First Author)
+- **Research Details:**
+  - Mixed-method study (quantitative + qualitative)
+  - N=342 survey participants, N=35 interviews
+  - Focus on fintech pain points in budgeting, bill tracking
+  - High-fidelity prototype development
+  - Accepted and presented at 27th HCII Conference
+
+##### **`research-outsourcing.html` - 7.5 KB**
+- **Book Title:** "Human-Centered, Sustainable, and Socially-Responsible Innovation"
+- **ISBN:** 979-8248682874
+- **Author:** Henglong Dang
+- **Content:**
+  - 257-page volume on "Great Outsourcing" concept
+  - Analysis of AI-driven judgment transfer across education, healthcare, finance, governance
+  - Framework for friction-aware interfaces and dissent checkpoints
+  - Focus on institutional resilience and social responsibility
+
+##### **`research-echoes.html` - 8.2 KB**
+- **Book Title:** "Echoes in the Machine: Relevance Gravity of Generative AI"
+- **ISBN:** 979-8296185310
+- **Content:**
+  - Defines "Relevance Gravity" as algorithmic attention force
+  - Technical vocabulary: Epistemic Surface, Antididacticism, Mythic Academicism
+  - Analysis of epistemic latency and semantic drift in AI models
+  - Ethical implications of metric-first AI design
+
+---
+
+### **Styling & Theme Architecture**
+
+#### **Design System Colors:**
+```
+Primary Color (Text/Headings):  #f5f8ff (light blue-white)
+Secondary Color (Accents/Links): #7dd3fc (cyan)
+Background:                     #0d0f14 (dark navy)
+Surface (Cards):                #131a22 (slightly lighter navy)
+Text Main:                      #e8edf5 (light gray-blue)
+Text Light:                     #cbd5e1 (muted gray-blue)
+Grid Color:                     rgba(88, 166, 199, 0.06) (subtle cyan grid)
+```
+
+#### **Technical Styling Features:**
+- **Grid Background:** Fixed 30×30px repeating grid pattern
+- **Dark Theme:** All pages implement tech-forward dark theme
+- **Typography:** Inter font family with Space Grotesk for headings
+- **Effects:**
+  - Card hover: Transform/shadow lift effect
+  - Link underlines: Animated scaleX transform on hover
+  - Focus states: 3px solid cyan outline
+  - Radial gradient overlay on hero section
+
+---
+
+### **JavaScript Functionality**
+
+#### **1. Safety/Filtering Module (lines 3–228 in index.html)**
+- `Flags` class tracks keyword matches against a blocklist
+- Intent scanning on form inputs/textareas
+- Reports matched flags to external endpoint
+- Hard-blocking mechanism for restricted content
+- YouTube video scoring system for Google Search
+
+#### **2. Back-to-Top Button**
+- Deferred script execution
+- Shows button when scroll Y > 400px
+- Smooth scroll behavior
+
+#### **3. Navigation Highlighting**
+- Detects current section in viewport
+- Updates active nav link styling
+
+#### **4. Smooth Scrolling**
+- CSS scroll-behavior: smooth applied globally
+
+#### **5. Intersection Observer Animations** (referenced but requires script completion)
+- Fade-in reveal effects on sections
+- Reduced motion respect (`prefers-reduced-motion`)
+
+---
+
+### **SEO & Metadata Structure**
+
+#### **Each page includes:**
+- **Meta Description:** Portfolio tagline
+- **Open Graph Tags:** og:title, og:description, og:image, og:url, og:type
+- **Twitter Card Tags:** twitter:card, twitter:title, twitter:description, twitter:image
+- **Canonical URLs:** Point to production domain (currently placeholder: https://yourdomain.com)
+- **Robots Meta:** "index, follow"
+- **Author Meta:** "Henglong Dang"
+- **Schema.org JSON-LD:** Person/CreativeWork structured data
+
+#### **Sitemap & SEO Files:**
+- `robots.txt` - Crawler configuration (67 bytes)
+- `sitemap.xml` - URL list for search engines (1,045 bytes)
+- `google284b90888274c00d.html` - Google Search Console verification (53 bytes)
+
+---
+
+### **Accessibility Features**
+
+- **Skip-to-Content Link:** `.skip-link` (focus-visible state)
+- **ARIA Landmarks:** `role="navigation"`, `role="main"`
+- **Semantic HTML:** Proper heading hierarchy, list markup
+- **Keyboard Navigation:** Enhanced focus visibility (3px cyan outline)
+- **Image Alt Text:** Lazy loading with descriptive alt attributes
+- **Color Contrast:** All text meets WCAG AA standards (verified in dark theme)
+- **Responsive Images:** Height/width attributes on images, lazy loading
+
+---
+
+### **Responsive Design**
+
+#### **Breakpoint:**
+- **Mobile (≤768px):** 
+  - Hero title shrinks from 4rem to 2.5rem
+  - Grid layouts stack to single column
+  - Navigation links hidden (mobile handling noted as "simple")
+
+#### **Responsive Features:**
+- `max-width` containers (920–1100px)
+- Flexible grid layouts (`grid-template-columns: repeat(auto-fit, minmax(...))`)
+- Padding responsive via rem units
+- Images: `aspect-ratio`, `object-fit: cover`
+
+---
+
+### **Asset Files**
+
+| File | Type | Size | Purpose |
+|------|------|------|---------|
+| Profile Picture.jpg | JPEG | 52 KB | Author profile photo |
+| dfdraw-logo.svg | SVG | 976 bytes | DFDraw Lab branding |
+| synaperge-logo.svg | SVG | 1.2 KB | Synaperge branding |
+| ORIGINAL index.html | HTML | 24.6 KB | Backup of original layout |
+| 111 | ? | 6.1 KB | Unknown/undocumented |
+
+---
+
+### **Documentation Files**
+
+1. **README.md (362 bytes):** High-level structure overview with section mapping
+2. **IMPROVEMENTS.md (1.9 KB):** Audit report documenting UX/SEO/mobile enhancements:
+   - Skip links, back-to-top button, accessibility landmarks
+   - SEO metadata completion
+   - Responsive image optimization
+   - Structured data (JSON-LD)
+   - Note: Production domain & OG image placeholders require manual updates
+
+---
+
+### **Missing/Incomplete Elements**
+
+⚠️ **Production Issues Requiring Attention:**
+- Domain placeholders: All pages still reference `https://yourdomain.com`
+- OG image: Placeholder `og-image.svg` needs custom design
+- Navigation mobile handling: Noted as "simple" (hidden on mobile)
+- Unknown file `111`: Purpose undocumented
+- Analytics/tracking: No Google Analytics or Segment code visible
+- Theme toggle: No light/dark mode switcher implemented
+
+---
+
+### **Key Architectural Decisions**
+
+✅ **Strengths:**
+- Pure HTML (zero framework dependencies)
+- SEO-first approach with structured data
+- Accessible dark-mode aesthetic
+- Modular page structure (main index + detail pages)
+- Fast loading (352 KB total repository)
+- GitHub Pages ready (no build step needed)
+- Semantic HTML with proper landmarks
+
+⚠️ **Technical Observations:**
+- Safety/filtering JavaScript suggests content moderation integration
+- No backend required (static-only)
+- CSS-in-head (no external stylesheet)
+- Inline SVG logos (improves performance)
+- Base64-encoded profile photo in profile.html (increases page weight)
+
+---
+
+This is a **well-architected, performance-conscious portfolio** optimized for SEO and accessibility, with a strong emphasis on showcasing AI ethics research and leadership experience.
